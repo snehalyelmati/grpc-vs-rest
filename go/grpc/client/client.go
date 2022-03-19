@@ -36,15 +36,17 @@ func main() {
 	ctx, cancel := context.WithTimeout(context.Background(), 2*time.Second)
 	defer cancel()
 
+	start := time.Now().UnixMilli()
 	for i := 0; i < *count; i++ {
-		start := time.Now().UnixMilli()
+		sub := time.Now().UnixMilli()
 		r, err := c.SayHello(ctx, &pb.HelloRequest{Name: *name})
 		if err != nil {
 			log.Fatalf("Could not say hello: %v", err)
 		}
 		log.Printf("Greeting: %s", r.GetMessage())
-		diff := time.Now().UnixMilli() - start
+		diff := time.Now().UnixMilli() - sub
 		log.Printf("Time taken to run the request: %vms", diff)
 	}
-	// log.Printf("Time taken to run %d requests: %vms", count, diff)
+	diff := time.Now().UnixMilli() - start
+	log.Printf("Total time taken to run %d requests: %vms", *count, diff)
 }
