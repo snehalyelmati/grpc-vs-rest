@@ -1,16 +1,29 @@
 # gRPC Vs REST Benchmark
 
-## Go APIs
+## Servers
 
-### gRPC
+### gRPC - Go
 
-Run server from the ```go/grpc/server``` folder using the following command,
+Run Go gRPC server using the following command, default port is `50051`.
+
 ```
-$ go run go/grpc/server.go
+$ go run go/grpc/server/server.go
 ```
 
-Run client from the ```go/grpc/client``` folder using the following command,
+### gRPC - Python
+
+Run Python gRPC server using the following command, default port is `50052`.
+
+```
+$ python python/grpc/server.py
+```
+
+## Clients
+
+Run Go gRPC client using the following command,
+
 ```
 // count - number of requests
-$ go run go/grpc/client.go --count=COUNT
+// port - port to connect
+$ go run go/grpc/client.go --count=COUNT --port=PORT
 ```
