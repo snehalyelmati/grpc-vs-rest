@@ -4,6 +4,7 @@ import (
 	"context"
 	"flag"
 	"log"
+	"strconv"
 	"time"
 
 	pb "github.com/snehalyelmati/grpc-vs-rest-benchmark/go/grpc/client/protos/hello"
@@ -14,18 +15,19 @@ import (
 const (
 	defaultName  = "world"
 	defaultCount = 1
+	defaultPort  = 50051
 )
 
 var (
-	port  = ":50051"
 	name  = flag.String("name", defaultName, "Name to greet")
 	count = flag.Int("count", defaultCount, "Number of requests")
+	port  = flag.Int("port", defaultPort, "Port")
 )
 
 func main() {
 	flag.Parse()
 
-	conn, err := grpc.Dial(port, grpc.WithTransportCredentials(insecure.NewCredentials()))
+	conn, err := grpc.Dial(":"+strconv.Itoa(*port), grpc.WithTransportCredentials(insecure.NewCredentials()))
 	if err != nil {
 		log.Fatalf("Did not connect: %v", err)
 	}
@@ -33,19 +35,15 @@ func main() {
 
 	c := pb.NewHelloClient(conn)
 
-	ctx, cancel := context.WithTimeout(context.Background(), 2*time.Second)
+	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
 	defer cancel()
 
 	start := time.Now().UnixMilli()
 	for i := 0; i < *count; i++ {
-		sub := time.Now().UnixMilli()
-		r, err := c.SayHello(ctx, &pb.HelloRequest{Name: *name})
+		_, err := c.SayHello(ctx, &pb.HelloRequest{Name: *name})
 		if err != nil {
 			log.Fatalf("Could not say hello: %v", err)
 		}
-		log.Printf("Greeting: %s", r.GetMessage())
-		diff := time.Now().UnixMilli() - sub
-		log.Printf("Time taken to run the request: %vms", diff)
 	}
 	diff := time.Now().UnixMilli() - start
 	log.Printf("Total time taken to run %d requests: %vms", *count, diff)
