@@ -18,12 +18,21 @@ Run Python gRPC server using the following command, default port is `50052`.
 $ python python/grpc/server.py
 ```
 
-## Clients
+### REST - Python
+
+Run Python REST server using the following command, default port is `5052`.
+
+```
+$ python python/rest/server.py
+```
+
+## Client
 
 Run Go gRPC client using the following command,
 
 ```
 // count - number of requests
 // port - port to connect
-$ go run go/grpc/client.go --count=COUNT --port=PORT
+// protocol - rest or grpc
+$ go run go/grpc/client.go --count=COUNT --port=PORT --protocol=PROTOCOL
 ```

@@ -18,7 +18,7 @@ const (
 	defaultName     = "world"
 	defaultCount    = 1
 	defaultPort     = 50051
-	defaultProtocol = "http"
+	defaultProtocol = "rest"
 )
 
 var (
@@ -54,7 +54,7 @@ func main() {
 		diff = float64(time.Now().UnixMilli()) - start
 	}
 
-	if *protocol == "http" {
+	if *protocol == "rest" {
 		data := []byte(`
             "Name": "world"
             `)
