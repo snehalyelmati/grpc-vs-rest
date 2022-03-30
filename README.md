@@ -28,6 +28,8 @@ $ python python/rest/server.py
 
 ## Implemented Clients
 
+### REST/gRPC - Go
+
 Run Go client using the following command,
 
 ```
@@ -37,6 +39,6 @@ Run Go client using the following command,
 $ go run go/grpc/client.go --count=COUNT --port=PORT --protocol=PROTOCOL
 ```
 
-## Benchmark Result
+## Benchmark Results
 
 ![gRPC vs REST Python](images/python.png "gRPC vs REST Python")
